@@ -8,7 +8,7 @@ from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken.views import obtain_auth_token
 
-from core.views import EmployeeViewSet, DepartmentViewSet, AttendanceViewSet, PerformanceViewSet
+from core.views import EmployeeViewSet, DepartmentViewSet, AttendanceViewSet, PerformanceViewSet, EmployeePerformanceSummary, EmployeePerformanceSummaryChart
 
 
 # DRF Router
@@ -38,4 +38,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('auth/login/', obtain_auth_token),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('performance-summary/', EmployeePerformanceSummary.as_view(), name='performance_summary'),
+    path('performance-chart/', EmployeePerformanceSummaryChart.as_view(), name='performance-chart'),
 ]

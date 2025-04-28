@@ -1,11 +1,14 @@
+from rest_framework.views import APIView
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import viewsets, filters
+from rest_framework.permissions import AllowAny
 
 from core.serializers import (EmployeeSerializer,DepartmentSerializer, AttendanceSerializer, PerformanceSerializer)
 from core.models import Employee, Department, Attendance, Performance
 
 from django.db.models import Avg
+from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 
 
@@ -46,3 +49,26 @@ class PerformanceViewSet(viewsets.ModelViewSet):
     filterset_fields = ['employee', 'review_date']
     search_fields = ['comments']
     ordering_fields = ['rating', 'review_date']
+
+
+class EmployeePerformanceSummary(APIView):
+    """
+    Returns a performance summary for chart visualization.
+    """
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        all_performance_records = Performance.objects.all()
+        summary_data = {
+            'labels': [f"{record.employee.name}" for record in all_performance_records],
+            'performance_scores': [record.rating for record in all_performance_records]
+        }
+        return Response(summary_data)
+
+
+
+class EmployeePerformanceSummaryChart(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        return render(request, 'data_chart/emp_performance_chart.html')
