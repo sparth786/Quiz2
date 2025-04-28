@@ -148,11 +148,11 @@ REST_FRAMEWORK = {
 
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
-        'Bearer': {
+        'Token': {
             'type': 'apiKey',
             'name': 'Authorization',
             'in': 'header',
-            'description': 'Enter token as: Bearer <your-token>',
+            'description': 'Enter token as: Token <your-token>',
         }
     }
 }

@@ -7,12 +7,16 @@ from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken.views import obtain_auth_token
 
-from core.views import EmployeeViewSet, DepartmentViewSet
+from core.views import EmployeeViewSet, DepartmentViewSet, AttendanceViewSet, PerformanceViewSet
+
 
 # DRF Router
 router = DefaultRouter()
 router.register(r'employees', EmployeeViewSet, basename='employee')
 router.register(r'departments', DepartmentViewSet, basename='departments')
+router.register(r'attendance', AttendanceViewSet, basename='attendance')
+router.register(r'performance', PerformanceViewSet, basename='performance')
+
 
 schema_view = get_schema_view(
     openapi.Info(
